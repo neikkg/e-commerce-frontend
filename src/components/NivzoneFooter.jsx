@@ -56,7 +56,7 @@ const NivzoneFooter = () => {
                     </div>
                     </div>
                     <div className="text-white bg-black md:h-[50px] h-[100px] flex md:flex-row flex-col items-center justify-between">
-                        <p className="text-[0.9rem] md:ml-[120px] text-center py-[10px]">Copyright© 2025. Nivzone All Rights Reserved. Designed by VS</p>
+                        <p className="text-[0.9rem] md:ml-[120px] text-center py-[10px]">Copyright© 2025. Nivzone All Rights Reserved. Designed by NIVZON Team</p>
                         <div className="md:mr-[140px] flex  items-center pb-[10px]">
                             <span className="text-white text-[0.9rem] font-semibold mr-[14px]">Follow Us:</span>
                             <span><i className="fa-brands fa-square-facebook text-blue-500 border-[1px] rounded-[6px] border-blue-4Name00 text-[2rem] bg-white hover:text-white hover:bg-blue-400 cursor-pointer  ml-[4px]"></i></span>
