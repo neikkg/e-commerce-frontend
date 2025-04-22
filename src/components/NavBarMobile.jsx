@@ -46,7 +46,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     return (
         <nav className="">
             <div
-                className={`fixed top-0 bg-black/60 z-[1000] h-screen inset-0 w-[20%] lg:hidden transform transition-all ease-in inline-flex flex-col ${
+                className={`fixed top-0 bg-black/60 z-[1000] h-screen inset-0 w-[40%] lg:hidden transform transition-all ease-in inline-flex flex-col ${
                     isMobileNavShow ? "translate-x-[0]" : "translate-x-[-100%]"
                 }`}
             >
