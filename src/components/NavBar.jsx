@@ -145,11 +145,21 @@ const NavBar = ({ setBgImage }) => {
     <nav className="max-w-[1450px] mx-auto z-1 w-full fixed top-0">
       <div className="py-[20px] bg-slate-300/60 text-blue-600">
         <div className="flex items-center justify-between md:h-[90px] h-[60px] w-full">
-          <Link to="/">
-            <div className="flex items-center justify-between mb-[40px] w-[180px] mx-auto lg:ml-[90px]">
-              <img className="h-[70px] md:mt-[30px] mt-[60px] items-center" src={logo} alt="Nivzone logo" />
+            <div className="flex items-center justify-center gap-[50px] mb-[40px] w-[180px] mx-auto lg:ml-[90px]">
+              <span className="md:hidden  text-[1.6rem]" onClick={() => setIsMobileNavBarShow(true)}>
+                <i className="fa-solid fa-bars text-slate-800 mt-[34px]"></i>
+              </span>
+              <img className="h-[70px] md:mt-[30px] mt-[40px] items-center md:ml-[0px]  " src={logo} alt="Nivzone logo" />
+              <Link to="/Cart">
+              <span className="md:hidden mr-[20px] ml-auto">
+                <i className="fa-solid fa-cart-shopping  font-semibold cursor-pointer mt-[34px]  text-[1.3rem]">
+                  <span className="p-[1px] bg-red-600 rounded-full text-[0.9rem] text-white relative top-[-15px] border-[5px] border-red-600">
+                    {/* {cartSize} */}0
+                  </span>
+                </i>
+              </span>
+            </Link>
             </div>
-          </Link>
           <ul
             className="cursor-pointer lg:flex hidden items-center justify-between gap-[34px] text-[1.3rem]"
             onClick={(e) => changeImg(e.target.id)}
@@ -188,9 +198,7 @@ const NavBar = ({ setBgImage }) => {
             )}
           </ul>
         </div>
-        <span className="md:hidden pl-[14px] text-[1.6rem]" onClick={() => setIsMobileNavBarShow(true)}>
-          <i className="fa-solid fa-bars text-slate-800"></i>
-        </span>
+        
         <NavBarMobile isMobileNavShow={isMobileNavShow} setIsMobileNavBarShow={setIsMobileNavBarShow} setBgImage={setBgImage} />
       </div>
     </nav>

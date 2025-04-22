@@ -46,7 +46,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     return (
         <nav className="">
             <div
-                className={`fixed top-0 bg-black/60 z-[1000] h-screen inset-0 w-[65%] lg:hidden transform transition-all ease-in inline-flex flex-col ${
+                className={`fixed top-0 bg-black/60 z-[1000] h-screen inset-0 w-[20%] lg:hidden transform transition-all ease-in inline-flex flex-col ${
                     isMobileNavShow ? "translate-x-[0]" : "translate-x-[-100%]"
                 }`}
             >
@@ -55,7 +55,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                     onClick={() => setIsMobileNavBarShow(false)}
                 ></i>
                 <ul
-                    className="cursor-pointer flex-col items-center justify-between gap-[30px] text-[1rem] font-semibold"
+                    className="text-white cursor-pointer flex-col items-center justify-between gap-[30px] text-[1rem] font-semibold"
                     onClick={(e) => changeImg(e.target.id)}
                 >
                     {navHeading.map((heading, index) => {
@@ -74,7 +74,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                         );
                     })}
                     {/* Add Cart Icon */}
-                    <li className="ml-[20px] mr-auto">
+                    {/* <li className="ml-[20px] mr-auto">
                         <NavLink
                             to="/Cart"
                             onClick={() => setIsMobileNavBarShow(false)} // Close navbar on cart click
@@ -87,7 +87,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                             </span>
                         </NavLink>
                         <hr className="text-gray-400 mb-[8px] mt-[12px]" />
-                    </li>
+                    </li> */}
                     {/* Add Login/Logout Button */}
                     <li className="ml-[20px] mr-auto">
                         {isAuthenticated ? (

@@ -19,10 +19,10 @@ const Electronics = () => {
                             <img loading="lazy" className=" object-contain object-center cursor-pointer h-full w-full transition-transform duration-300 ease-in-out active:scale-[1.2] md:group-hover:scale-[1.1]" src = {img} alt="" />
                         </div>
                         <Link to={`/BuyNow/${id}`}>
-                        <p className="  my-[14px] ml-[30px] items-center font-semibold cursor-pointer hover:text-blue-400 hover:transition-all hover:duration-300 hover:ease-in-out"> {productName}</p>
+                        <p className=" my-[14px] ml-[30px] items-center font-semibold cursor-pointer hover:text-blue-400 hover:transition-all hover:duration-300 hover:ease-in-out"> {productName}</p>
                         <div className="flex items-center justify-between mr-[30px]">
-                            <p className="ml-[30px] text-[0.95rem] text-green-500 mt-[2px] ">Save {discount}%*</p>
-                            <button className="ml-[30px] px-[18px] bg-gray-200 py-[4px] rounded-[6px] text-[0.95rem] text-black font-semibold mt-[4px] hover:text-white hover:bg-blue-400 hover:transition-all hover:duration-300 hover:ease-in-out cursor-pointer mb-[4px]">FROM &#8377;
+                            <p className="ml-[30px] text-[0.92rem] md:text-[0.95rem] text-green-500 mt-[2px] ">Save {discount}%*</p>
+                            <button className="ml-[30px] px-[18px] bg-gray-200 py-[4px] rounded-[6px] text-[0.92rem] md:text-[0.95rem] text-black font-semibold mt-[4px] hover:text-white hover:bg-blue-400 hover:transition-all hover:duration-300 hover:ease-in-out cursor-pointer mb-[4px]">FROM &#8377;
                             {price}</button>
                         </div>
                         </Link>
