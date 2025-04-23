@@ -248,7 +248,7 @@ export const electronicsPage = [
         discount: '20-55',
         ratings: "4.4 ★",
         reviews: "10,88,256 Ratings & 59,165 Reviews",
-        discountPrice: "40,000",
+        discountPrice: "40000",
         specialDiscount: 30,
         delivery: "2-5",
         price: '59,999'
