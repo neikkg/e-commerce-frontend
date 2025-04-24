@@ -1,32 +1,340 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import axios from "axios";
+
+// const LoginPage = () => {
+//     const [isLogin, setIsLogin] = useState(true);
+//     const [fullName, setFullName] = useState("");
+//     const [email, setEmail] = useState("");
+//     const [password, setPassword] = useState("");
+//     const [loading, setLoading] = useState(false);
+//     const [message, setMessage] = useState("");
+//     const navigate = useNavigate();
+//     const location = useLocation();
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         setLoading(true);
+//         setMessage("");
+
+//         try {
+//             if (isLogin) {
+//                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signin", {
+//                     email,
+//                     password,
+//                 });
+
+//                 console.log("Login successful:", response.data);
+//                 localStorage.setItem("token", response.data.jwt);
+//                 const { from } = location.state || { from: "/" };
+//                 navigate(from, {
+//                     state: {
+//                         alert: {
+//                             message: "Logged in successfully!",
+//                             type: "success"
+//                         }
+//                     }
+//                 });
+
+//                 setEmail("");
+//                 setPassword("");
+//             } else {
+//                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signup", {
+//                     fullName,
+//                     email,
+//                     password,
+//                 });
+
+//                 console.log("Signup successful:", response.data);
+//                 setMessage("Account created successfully! Please log in.");
+
+//                 setIsLogin(true);
+//                 setFullName("");
+//                 setEmail("");
+//                 setPassword("");
+//             }
+//         } catch (err) {
+//             setMessage(err.response?.data?.message || "An error occurred. Please try again.");
+//             console.error("API Error:", err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     const toggleForm = () => {
+//         setIsLogin(!isLogin);
+//         setMessage("");
+//     };
+
+//     return (
+//         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4">
+//             <form
+//                 onSubmit={handleSubmit}
+//                 className="relative bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl transform transition-all duration-500 ease-in-out animate-slide-in"
+//             >
+//                 <h3 className="text-2xl font-bold text-center text-gray-800 mb-6 animate-fade-in">
+//                     {isLogin ? "Welcome Back" : "Create Account"}
+//                 </h3>
+
+//                 {message && (
+//                     <div
+//                         className={`text-center p-3 mb-6 rounded-lg text-sm font-medium animate-fade-in-fast ${
+//                             message.includes("successfully")
+//                                 ? "bg-green-100 text-green-700"
+//                                 : "bg-red-100 text-red-700"
+//                         }`}
+//                     >
+//                         {message}
+//                     </div>
+//                 )}
+
+//                 {!isLogin && (
+//                     <div className="mb-5">
+//                         <input
+//                             value={fullName}
+//                             onChange={(e) => setFullName(e.target.value)}
+//                             className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                             type="text"
+//                             placeholder="Full Name"
+//                             required
+//                         />
+//                     </div>
+//                 )}
+
+//                 <div className="mb-5">
+//                     <input
+//                         value={email}
+//                         onChange={(e) => setEmail(e.target.value)}
+//                         className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                         type="email"
+//                         placeholder="Email"
+//                         required
+//                     />
+//                 </div>
+
+//                 <div className="mb-6">
+//                     <input
+//                         value={password}
+//                         onChange={(e) => setPassword(e.target.value)}
+//                         className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                         type="password"
+//                         placeholder="Password"
+//                         required
+//                     />
+//                 </div>
+
+//                 <button
+//                     type="submit"
+//                     disabled={loading}
+//                     className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-105"
+//                 >
+//                     {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
+//                 </button>
+
+//                 <div className="mt-4 text-center">
+//                     <span
+//                         onClick={toggleForm}
+//                         className="text-blue-600 font-medium cursor-pointer hover:text-blue-800 transition-colors duration-300"
+//                     >
+//                         {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+//                     </span>
+//                 </div>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default LoginPage;
+
+
+
+
+
+
+
+
+
+
+// import { useState } from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import axios from "axios";
+
+// const LoginPage = () => {
+//     const [isLogin, setIsLogin] = useState(true);
+//     const [fullName, setFullName] = useState("");
+//     const [email, setEmail] = useState("");
+//     const [password, setPassword] = useState("");
+//     const [loading, setLoading] = useState(false);
+//     const [message, setMessage] = useState("");
+//     const navigate = useNavigate();
+//     const location = useLocation();
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         setLoading(true);
+//         setMessage("");
+
+//         try {
+//             if (isLogin) {
+//                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signin", {
+//                     email,
+//                     password,
+//                 });
+
+//                 console.log("Login successful:", response.data);
+//                 localStorage.setItem("token", response.data.jwt);
+//                 const { from } = location.state || { from: "/" };
+//                 const redirectTo = from === "/Orders" ? "/" : from;
+//                 console.log("Redirecting to:", redirectTo, "from:", from);
+//                 navigate(redirectTo, {
+//                     state: {
+//                         alert: {
+//                             message: "Logged in successfully!",
+//                             type: "success"
+//                         }
+//                     }
+//                 });
+
+//                 setEmail("");
+//                 setPassword("");
+//             } else {
+//                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signup", {
+//                     fullName,
+//                     email,
+//                     password,
+//                 });
+
+//                 console.log("Signup successful:", response.data);
+//                 setMessage("Account created successfully! Please log in.");
+
+//                 setIsLogin(true);
+//                 setFullName("");
+//                 setEmail("");
+//                 setPassword("");
+//             }
+//         } catch (err) {
+//             setMessage(err.response?.data?.message || "An error occurred. Please try again.");
+//             console.error("API Error:", err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     const toggleForm = () => {
+//         setIsLogin(!isLogin);
+//         setMessage("");
+//     };
+
+//     return (
+//         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4">
+//             <form
+//                 onSubmit={handleSubmit}
+//                 className="relative bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl transform transition-all duration-500 ease-in-out animate-slide-in"
+//             >
+//                 <h3 className="text-2xl font-bold text-center text-gray-800 mb-6 animate-fade-in">
+//                     {isLogin ? "Welcome Back" : "Create Account"}
+//                 </h3>
+
+//                 {message && (
+//                     <div
+//                         className={`text-center p-3 mb-6 rounded-lg text-sm font-medium animate-fade-in-fast ${
+//                             message.includes("successfully")
+//                                 ? "bg-green-100 text-green-700"
+//                                 : "bg-red-100 text-red-700"
+//                         }`}
+//                     >
+//                         {message}
+//                     </div>
+//                 )}
+
+//                 {!isLogin && (
+//                     <div className="mb-5">
+//                         <input
+//                             value={fullName}
+//                             onChange={(e) => setFullName(e.target.value)}
+//                             className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                             type="text"
+//                             placeholder="Full Name"
+//                             required
+//                         />
+//                     </div>
+//                 )}
+
+//                 <div className="mb-5">
+//                     <input
+//                         value={email}
+//                         onChange={(e) => setEmail(e.target.value)}
+//                         className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                         type="email"
+//                         placeholder="Email"
+//                         required
+//                     />
+//                 </div>
+
+//                 <div className="mb-6">
+//                     <input
+//                         value={password}
+//                         onChange={(e) => setPassword(e.target.value)}
+//                         className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
+//                         type="password"
+//                         placeholder="Password"
+//                         required
+//                     />
+//                 </div>
+
+//                 <button
+//                     type="submit"
+//                     disabled={loading}
+//                     className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-105"
+//                 >
+//                     {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
+//                 </button>
+
+//                 <div className="mt-4 text-center">
+//                     <span
+//                         onClick={toggleForm}
+//                         className="text-blue-600 font-medium cursor-pointer hover:text-blue-800 transition-colors duration-300"
+//                     >
+//                         {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+//                     </span>
+//                 </div>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default LoginPage;
+
+
+
+
+
+
+
+
+
+
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
-    const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Sign Up
+    const [isLogin, setIsLogin] = useState(true);
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication state
-
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
-
-    // Check authentication status on component mount
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        setIsAuthenticated(!!token);
-    }, []);
+    const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError("");
+        setMessage("");
 
         try {
             if (isLogin) {
-                // Login logic
                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signin", {
                     email,
                     password,
@@ -34,18 +342,19 @@ const LoginPage = () => {
 
                 console.log("Login successful:", response.data);
                 localStorage.setItem("token", response.data.jwt);
+                console.log("Redirecting to homepage from:", location.state?.from || "/");
+                navigate("/", {
+                    state: {
+                        alert: {
+                            message: "Logged in successfully!",
+                            type: "success"
+                        }
+                    }
+                });
 
-                // Update authentication state
-                setIsAuthenticated(true);
-
-                // Navigate to homepage
-                navigate("/");
-
-                // Clear form
                 setEmail("");
                 setPassword("");
             } else {
-                // Sign Up logic
                 const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signup", {
                     fullName,
                     email,
@@ -53,95 +362,100 @@ const LoginPage = () => {
                 });
 
                 console.log("Signup successful:", response.data);
+                setMessage("Account created successfully! Please log in.");
 
-                // Switch to login form after successful signup
                 setIsLogin(true);
                 setFullName("");
                 setEmail("");
                 setPassword("");
             }
         } catch (err) {
-            setError(err.response?.data?.message || "An error occurred. Please try again.");
+            setMessage(err.response?.data?.message || "An error occurred. Please try again.");
             console.error("API Error:", err);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        navigate("/"); // Redirect to homepage or login page
-    };
-
     const toggleForm = () => {
         setIsLogin(!isLogin);
-        setError(""); // Clear any existing errors when toggling
+        setMessage("");
     };
 
     return (
-        <div className="flex items-center justify-center h-screen mx-auto max-w-[1400px]">
-            {isAuthenticated ? (
-                <div className="flex flex-col shadow-md items-center h-[400px] w-[440px] rounded-[12px] bg-white">
-                    <h3 className="text-black text-[1.5rem] my-[30px]">Welcome!</h3>
-                    <button
-                        onClick={handleLogout}
-                        className="h-[46px] cursor-pointer w-[310px] block mx-auto rounded-[5px] bg-[#4c64fd] text-white hover:bg-amber-500 active:bg-amber-500"
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4">
+            <form
+                onSubmit={handleSubmit}
+                className="relative bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl transform transition-all duration-500 ease-in-out animate-slide-in"
+            >
+                <h3 className="text-2xl font-bold text-center text-gray-800 mb-6 animate-fade-in">
+                    {isLogin ? "Welcome Back" : "Create Account"}
+                </h3>
+
+                {message && (
+                    <div
+                        className={`text-center p-3 mb-6 rounded-lg text-sm font-medium animate-fade-in-fast ${
+                            message.includes("successfully")
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-700"
+                        }`}
                     >
-                        Logout
-                    </button>
-                </div>
-            ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col shadow-md items-center h-[400px] w-[440px] rounded-[12px] bg-white">
-                    <h3 className="text-black text-[1.5rem] my-[30px]">{isLogin ? "Login" : "Sign Up"}</h3>
+                        {message}
+                    </div>
+                )}
 
-                    {error && <div className="text-red-500 mb-4">{error}</div>}
-
-                    {!isLogin && (
+                {!isLogin && (
+                    <div className="mb-5">
                         <input
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            className="text-[1.1rem] w-[310px] p-[10px] mb-[12px] outline-none border-[1px] border-gray-400 rounded-[6px]"
+                            className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
                             type="text"
                             placeholder="Full Name"
                             required
                         />
-                    )}
+                    </div>
+                )}
 
+                <div className="mb-5">
                     <input
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="text-[1.1rem] w-[310px] p-[10px] mb-[12px] outline-none border-[1px] border-gray-400 rounded-[6px]"
+                        className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
                         type="email"
                         placeholder="Email"
                         required
                     />
+                </div>
 
+                <div className="mb-6">
                     <input
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="text-[1.1rem] w-[310px] p-[10px] mb-[12px] outline-none border-[1px] border-gray-400 rounded-[6px]"
+                        className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:bg-gray-100"
                         type="password"
                         placeholder="Password"
                         required
                     />
+                </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="h-[46px] cursor-pointer w-[310px] block mx-auto rounded-[5px] bg-[#4c64fd] text-white hover:bg-amber-500 active:bg-amber-500 disabled:bg-gray-400"
-                    >
-                        {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
-                    </button>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-105"
+                >
+                    {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
+                </button>
 
+                <div className="mt-4 text-center">
                     <span
                         onClick={toggleForm}
-                        className="h-[46px] cursor-pointer w-[310px] mt-[10px] mx-auto rounded-[5px] bg-[#4c64fd] text-white flex justify-center items-center hover:bg-amber-500 active:bg-amber-500 hover:text-white"
+                        className="text-blue-600 font-medium cursor-pointer hover:text-blue-800 transition-colors duration-300"
                     >
                         {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
                     </span>
-                </form>
-            )}
+                </div>
+            </form>
         </div>
     );
 };

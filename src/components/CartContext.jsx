@@ -12,7 +12,13 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (item) => {
+  const addToCart = (item, navigate, location) => {
+    const token = localStorage.getItem("token");
+    if (!token && navigate && location) {
+      navigate("/Login", { state: { from: location.pathname } });
+      return;
+    }
+
     setCart((prevCart) => {
       const isPresent = prevCart.find((product) => product.id === item.id);
       if (isPresent) {

@@ -1,44 +1,65 @@
-// filepath: 
 export const initiatePayment = async (cartItems, totalAmount) => {
-    try {
+    return new Promise(async (resolve, reject) => {
+      try {
         const response = await fetch('https://e-commerce-api-i2ak.onrender.com/api/payments/create-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ amount: totalAmount, cart: cartItems }),
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ amount: totalAmount, cart: cartItems }),
         });
         const order = await response.json();
-
-        if (order.id) {
-            const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY // Fetch the Razorpay key
-            console.log('Razorpay Key:', razorpayKey); // Debug the key
-
-            const options = {
-                key: razorpayKey, // Use the environment variable
-                amount: order.amount,
-                currency: order.currency,
-                name: 'E-Commerce Store',
-                description: 'Test Transaction',
-                order_id: order.id,
-                handler: function (response) {
-                    alert('Payment successful!');
-                    console.log(response);
-                },
-                prefill: {
-                    name: 'Customer Name',
-                    email: 'customer@example.com',
-                    contact: '9999999999',
-                },
-            };
-            const razorpay = new Razorpay(options);
-            razorpay.on('payment.failed', function (response) {
-                alert('Payment failed!');
-                console.error(response.error);
-            });
-            razorpay.open();
+  
+        if (!order.id) {
+          return reject(new Error('Failed to create order'));
         }
-    } catch (error) {
+  
+        const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY;
+        console.log('Razorpay Key:', razorpayKey);
+  
+        const options = {
+          key: razorpayKey,
+          amount: order.amount,
+          currency: order.currency,
+          name: 'E-Commerce Store',
+          description: `Payment for ${cartItems.length} item(s)`,
+          order_id: order.id,
+          handler: function (response) {
+            console.log('Payment successful:', response);
+            resolve({ success: true, data: response });
+          },
+          modal: {
+            ondismiss: function () {
+              console.log('Payment canceled');
+              reject(new Error('Payment canceled by user'));
+            },
+          },
+          prefill: {
+            name: 'Customer Name',
+            email: 'customer@example.com',
+            contact: '9999999999',
+          },
+          notes: {
+            items: JSON.stringify(cartItems.map(item => ({
+              id: item.id,
+              productName: item.productName,
+              amount: item.amount || 1,
+            }))),
+          },
+          theme: {
+            color: '#3399cc',
+          },
+        };
+  
+        const razorpay = new window.Razorpay(options);
+        razorpay.on('payment.failed', function (response) {
+          console.error('Payment failed:', response.error);
+          reject(new Error('Payment failed: ' + response.error.description));
+        });
+        razorpay.open();
+      } catch (error) {
         console.error('Error during payment initiation:', error);
-    }
-};
+        reject(error);
+      }
+    });
+  };

@@ -1,14 +1,22 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { bestDealsImage, bestSellersImage, electronicsImage, fashionImage, homeImage, navHeading } from "../utils/data";
+import { bestDealsImage, bestSellersImage, electronicsImage, fashionImage, homeImage } from "../utils/data";
 import { useState, useEffect } from "react";
-import { useCart } from "./CartContext"; // Adjust path as needed
+import { useCart } from "./CartContext";
 
 const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication state
-    const { cartSize } = useCart(); // Get cart size from context
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { cartSize } = useCart();
     const navigate = useNavigate();
 
-    // Check authentication status on component mount
+    const navLinks = [
+        "Home",
+        "Electronics",
+        "Fashion",
+        "Best Deals",
+        "Best Sellers",
+        "Orders",
+    ];
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         setIsAuthenticated(!!token);
@@ -17,8 +25,15 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     const handleLogout = () => {
         localStorage.removeItem("token");
         setIsAuthenticated(false);
-        setIsMobileNavBarShow(false); // Close the mobile navbar
-        navigate("/Login"); // Redirect to login page after logout
+        setIsMobileNavBarShow(false);
+        navigate("/", {
+            state: {
+                alert: {
+                    message: "Logged out successfully!",
+                    type: "success"
+                }
+            }
+        });
     };
 
     const changeImg = (url) => {
@@ -51,20 +66,23 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                 }`}
             >
                 <i
-                    className="fa-solid fa-xmark mr-[20px] ml-auto mt-[20px] cursor-pointer"
+                    className="fa-solid fa-xmark mr-[20px] ml-auto mt-[20px] cursor-pointer text-white"
                     onClick={() => setIsMobileNavBarShow(false)}
                 ></i>
                 <ul
                     className="text-white cursor-pointer flex-col items-center justify-between gap-[30px] text-[1rem] font-semibold"
-                    onClick={(e) => changeImg(e.target.id)}
                 >
-                    {navHeading.map((heading, index) => {
+                    {navLinks.map((heading, index) => {
                         const updateURL = heading.split(" ").join("");
                         return (
                             <NavLink
                                 key={heading + index}
                                 to={`/${heading === "Home" ? "" : updateURL}`}
-                                onClick={() => setIsMobileNavBarShow(false)} // Close navbar on link click
+                                onClick={() => {
+                                    if (heading !== "Orders") changeImg(heading);
+                                    setIsMobileNavBarShow(false);
+                                }}
+                                className="hover:text-red-600"
                             >
                                 <li id={heading} className="ml-[20px] mr-auto">
                                     {heading}
@@ -73,35 +91,19 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                             </NavLink>
                         );
                     })}
-                    {/* Add Cart Icon */}
-                    {/* <li className="ml-[20px] mr-auto">
-                        <NavLink
-                            to="/Cart"
-                            onClick={() => setIsMobileNavBarShow(false)} // Close navbar on cart click
-                            className="text-white font-semibold hover:text-red-600 text-[1rem] flex items-center"
-                        >
-                            <i className="fa-solid fa-cart-shopping mr-[10px]"></i>
-                            Cart
-                            <span className="ml-[5px] p-[2px] bg-red-600 rounded-full text-[0.8rem] text-white">
-                                {cartSize}
-                            </span>
-                        </NavLink>
-                        <hr className="text-gray-400 mb-[8px] mt-[12px]" />
-                    </li> */}
-                    {/* Add Login/Logout Button */}
                     <li className="ml-[20px] mr-auto">
                         {isAuthenticated ? (
                             <button
                                 onClick={handleLogout}
-                                className="text-white font-semibold hover:text-red-600 text-[1rem]"
+                                className="bg-red-600 text-white font-semibold text-[1.1rem] px-3 py-0.5 rounded-md hover:bg-red-700 active:bg-red-800 transition-colors"
                             >
                                 Logout
                             </button>
                         ) : (
                             <NavLink
                                 to="/Login"
-                                onClick={() => setIsMobileNavBarShow(false)} // Close navbar on login click
-                                className="text-white font-semibold hover:text-red-600 text-[1rem]"
+                                onClick={() => setIsMobileNavBarShow(false)}
+                                className="bg-green-600 text-white font-semibold text-[1.1rem] px-3 py-0.5 rounded-md hover:bg-green-700 active:bg-green-800 transition-colors"
                             >
                                 Login
                             </NavLink>
