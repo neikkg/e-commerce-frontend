@@ -36,6 +36,23 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
         });
     };
 
+    const handleOrdersClick = () => {
+        console.log("NavBarMobile: Orders clicked, isAuthenticated:", isAuthenticated);
+        if (isAuthenticated) {
+            navigate("/Orders");
+            setIsMobileNavBarShow(false);
+        } else {
+            navigate("/Login", { replace: true, state: { from: "/Orders" } });
+            setIsMobileNavBarShow(false);
+        }
+    };
+
+    const handleLoginClick = () => {
+        console.log("NavBarMobile: Login clicked");
+        navigate("/Login");
+        setIsMobileNavBarShow(false);
+    };
+
     const changeImg = (url) => {
         switch (url) {
             case "Home":
@@ -74,12 +91,24 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                 >
                     {navLinks.map((heading, index) => {
                         const updateURL = heading.split(" ").join("");
+                        if (heading === "Orders") {
+                            return (
+                                <li
+                                    key={heading + index}
+                                    onClick={handleOrdersClick}
+                                    className="ml-[20px] mr-auto hover:text-red-600"
+                                >
+                                    Orders
+                                    <hr className="text-gray-400 mb-[8px] mt-[12px]" />
+                                </li>
+                            );
+                        }
                         return (
                             <NavLink
                                 key={heading + index}
                                 to={`/${heading === "Home" ? "" : updateURL}`}
                                 onClick={() => {
-                                    if (heading !== "Orders") changeImg(heading);
+                                    changeImg(heading);
                                     setIsMobileNavBarShow(false);
                                 }}
                                 className="hover:text-red-600"
@@ -100,13 +129,12 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                                 Logout
                             </button>
                         ) : (
-                            <NavLink
-                                to="/Login"
-                                onClick={() => setIsMobileNavBarShow(false)}
+                            <button
+                                onClick={handleLoginClick}
                                 className="bg-green-600 text-white font-semibold text-[1.1rem] px-3 py-0.5 rounded-md hover:bg-green-700 active:bg-green-800 transition-colors"
                             >
                                 Login
-                            </NavLink>
+                            </button>
                         )}
                         <hr className="text-gray-400 mb-[8px] mt-[12px]" />
                     </li>

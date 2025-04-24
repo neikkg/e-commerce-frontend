@@ -48,6 +48,15 @@ const NavBar = ({ setBgImage }) => {
     }
   };
 
+  const handleOrdersClick = () => {
+    console.log("NavBar: Orders clicked, isAuthenticated:", isAuthenticated);
+    if (isAuthenticated) {
+      navigate("/Orders");
+    } else {
+      navigate("/Login", { replace: true, state: { from: "/Orders" } });
+    }
+  };
+
   const changeImg = (url) => {
     switch (url) {
       case "Home":
@@ -102,12 +111,29 @@ const NavBar = ({ setBgImage }) => {
           >
             {navLinks.map((heading, index) => {
               const updateURL = heading.split(" ").join("");
+              if (heading === "Orders") {
+                return (
+                  <li
+                    key={heading + index}
+                    onClick={handleOrdersClick}
+                    className="relative flex w-fit text-white group"
+                  >
+                    <span
+                      id={heading}
+                      className="hover:text-red-600 text-blue-700 font-semibold"
+                    >
+                      Orders
+                      <span className="absolute left-0 bottom-0 h-[2px] bg-red-600 w-0 group-hover:w-full transition-all duration-300 ease-in-out"></span>
+                    </span>
+                  </li>
+                );
+              }
               return (
                 <NavLink
                   key={heading + index}
                   to={`/${heading === "Home" ? "" : updateURL}`}
                   className="relative flex w-fit text-white group"
-                  onClick={() => heading !== "Orders" && changeImg(heading)}
+                  onClick={() => changeImg(heading)}
                 >
                   <li
                     id={heading}
