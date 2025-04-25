@@ -79,8 +79,8 @@ const SearchBar = ({ onSearchResults }) => {
                         <h3 className="text-lg font-semibold truncate">{product.productName}</h3>
                         <p className="text-sm text-gray-600 truncate">{product.productFeature} </p>
                         <div className="flex items-center mt-[10px]">
-                            <span className="text-lg text-red-600 font-semibold"> ₹{product.discountPrice.replace(/,/g, "")}</span>
-                            <span className="text-sm text-gray-500 line-through ml-[10px]">₹{product.price.replace(/,/g, "")}</span>
+                            <span className="text-lg text-red-600 font-semibold"> ₹{product.discountPrice.toLocaleString('en-IN')(/,/g, "")}</span>
+                            <span className="text-sm text-gray-500 line-through ml-[10px]">₹{product.price.toLocaleString('en-IN')(/,/g, "")}</span>
                             <span className="text-sm text-green-600 ml-[10px]">{product.specialDiscount || "0"}% off</span>
                         </div>
                         <div className="flex items-center  text-sm my-[6px]"> 

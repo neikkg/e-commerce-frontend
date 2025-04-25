@@ -55,11 +55,11 @@ const BuyNowPage = () => {
     }
     try {
       console.log("Initiating payment for product:", product);
-      const paymentResult = await initiatePayment([product], product.discountPrice);
+      const paymentResult = await initiatePayment([product], product.discountPrice.toLocaleString('en-IN'));
       if (paymentResult.success) {
         const orderItem = { ...product, amount: 1 };
-        console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice);
-        addOrder([orderItem], product.discountPrice);
+        console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice.toLocaleString('en-IN'));
+        addOrder([orderItem], product.discountPrice.toLocaleString('en-IN'));
         navigate("/", {
           state: {
             alert: {
@@ -94,9 +94,9 @@ const BuyNowPage = () => {
           />
         )}
         <div className="flex flex-col mb-[100px] group overflow-hidden">
-          <div className="md:h-[540px] md:w-[640px] mt-[40px] h-[400px]">
+        <div className="md:h-[540px] md:w-[640px] mt-[40px] h-[400px] overflow-hidden ">
             <img
-              className="h-full w-full object-contain object-center md:ml-[40px] pb-[20px] transition-transform duration-300 ease-in-out active:scale-[1.2] md:group-hover:scale-[1.1]"
+              className="h-full w-full object-contain object-center md:ml-[40px] pb-[20px] transition-transform duration-300 ease-in-out active:scale-[1.2] overflow-hidden md:hover:scale-[1.1]"
               src={product.img}
               alt={product.productName}
             />
@@ -104,13 +104,13 @@ const BuyNowPage = () => {
           <div>
             <button
               onClick={() => addToCart(product, navigate, location)}
-              className="text-[1.3rem] font-semibold text-white md:ml-[80px] ml-[56px] border-solid border-[2px] border-[#f19c0a] bg-[#f19c0a] rounded-[6px] md:px-[44px] px-[60px] py-[8px] hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white mb-[26px]"
+              className="text-[1.3rem] font-semibold text-white md:ml-[80px] md:inline flex mx-auto border-solid border-[2px] border-[#f19c0a] bg-[#f19c0a] rounded-[6px] md:px-[44px] px-[60px] md:mx-[0] py-[8px] hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white mb-[26px] z-10"
             >
               ADD TO CART
             </button>
             <button
               onClick={handleBuyNow}
-              className="text-[1.3rem] font-semibold text-white ml-[56px] border-solid border-[2px] border-[#fb4913] bg-[#fb4913] rounded-[6px] md:px-[60px] px-[80px] py-[8px] hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white"
+              className="text-[1.3rem] font-semibold text-white md:ml-[56px] border-solid border-[2px] border-[#fb4913] bg-[#fb4913] rounded-[6px] md:px-[60px] px-[80px] py-[8px] md:inline flex  md:mx-[0] mx-auto hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white z-10"
             >
               BUY NOW
             </button>
@@ -129,8 +129,8 @@ const BuyNowPage = () => {
             </div>
             <div className="text-green-700 font-semibold text-lg">Special price</div>
             <div className="flex items-end space-x-2">
-              <span className="text-2xl font-bold text-red-600">₹{product.discountPrice}</span>
-              <span className="line-through text-gray-500">₹{product.price}</span>
+              <span className="text-2xl font-bold text-red-600">₹{product.discountPrice.toLocaleString('en-IN')}</span>
+              <span className="line-through text-gray-500">₹{product.price.toLocaleString('en-IN')}</span>
               <span className="text-green-600 font-semibold">{product.specialDiscount}% off</span>
             </div>
             <p className="text-sm text-gray-700">Secure delivery in {product.delivery} days</p>
