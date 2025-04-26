@@ -55,7 +55,7 @@ const BuyNowPage = () => {
     }
     try {
       console.log("Initiating payment for product:", product);
-      const paymentResult = await initiatePayment([product], product.discountPrice.toLocaleString('en-IN'));
+      const paymentResult = await initiatePayment([product], product.discountPrice);
       if (paymentResult.success) {
         const orderItem = { ...product, amount: 1 };
         console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice.toLocaleString('en-IN'));
