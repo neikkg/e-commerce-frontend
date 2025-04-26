@@ -1,11 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { bestDealsImage, bestSellersImage, electronicsImage, fashionImage, homeImage } from "../utils/data";
 import { useState, useEffect } from "react";
-import { useCart } from "./CartContext";
+import { useCart } from "./context/CartContext";
 
 const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const { cartSize } = useCart();
+    const { cartSize, clearCart } = useCart();
     const navigate = useNavigate();
 
     const navLinks = [
@@ -22,7 +22,8 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
         setIsAuthenticated(!!token);
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await clearCart();
         localStorage.removeItem("token");
         setIsAuthenticated(false);
         setIsMobileNavBarShow(false);
@@ -37,7 +38,6 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     };
 
     const handleOrdersClick = () => {
-        console.log("NavBarMobile: Orders clicked, isAuthenticated:", isAuthenticated);
         if (isAuthenticated) {
             navigate("/Orders");
             setIsMobileNavBarShow(false);
@@ -48,7 +48,6 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     };
 
     const handleLoginClick = () => {
-        console.log("NavBarMobile: Login clicked");
         navigate("/Login");
         setIsMobileNavBarShow(false);
     };
@@ -86,9 +85,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                     className="fa-solid fa-xmark mr-[20px] ml-auto mt-[20px] cursor-pointer text-white"
                     onClick={() => setIsMobileNavBarShow(false)}
                 ></i>
-                <ul
-                    className="text-white cursor-pointer flex-col items-center justify-between gap-[30px] text-[1rem] font-semibold"
-                >
+                <ul className="text-white cursor-pointer flex-col items-center justify-between gap-[30px] text-[1rem] font-semibold">
                     {navLinks.map((heading, index) => {
                         const updateURL = heading.split(" ").join("");
                         if (heading === "Orders") {

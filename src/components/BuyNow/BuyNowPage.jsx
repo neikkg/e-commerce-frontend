@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import BookNowNavbar from "../BookNowNavBar.jsx";
 import NivzoneFooter from "../NivzoneFooter.jsx";
-import { useCart } from "../CartContext";
-import { useOrder } from "../OrderContext";
-import { initiatePayment } from "../services/razorpayIntegration.js";
+import { useCart } from "../context/CartContext.jsx";
+import { useOrder } from "../context/OrderContext.jsx";
+import { initiatePayment } from "../../utils/razorpayIntegration.js";
 import Alert from "../Alert";
 import {
   bestDealsPage,
@@ -57,13 +57,20 @@ const BuyNowPage = () => {
       console.log("Initiating payment for product:", product);
       const paymentResult = await initiatePayment([product], product.discountPrice);
       if (paymentResult.success) {
-        const orderItem = { ...product, amount: 1 };
-        console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice.toLocaleString('en-IN'));
-        addOrder([orderItem], product.discountPrice.toLocaleString('en-IN'));
+        const orderItem = {
+          productId: product.id,
+          productName: product.productName || product.title,
+          img: product.img,
+          price: Number(product.price) || 0,
+          discountPrice: Number(product.discountPrice) || undefined,
+          amount: 1
+        };
+        console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice);
+        await addOrder([orderItem], product.discountPrice); // Pass numeric total
         navigate("/", {
           state: {
             alert: {
-              message: "Payment successful!",
+              message: "Payment successful! Order placed.",
               type: "success",
             },
           },
@@ -94,7 +101,7 @@ const BuyNowPage = () => {
           />
         )}
         <div className="flex flex-col mb-[100px] group overflow-hidden">
-        <div className="md:h-[540px] md:w-[640px] mt-[40px] h-[400px] overflow-hidden ">
+          <div className="md:h-[540px] md:w-[640px] mt-[40px] h-[400px] overflow-hidden">
             <img
               className="h-full w-full object-contain object-center md:ml-[40px] pb-[20px] transition-transform duration-300 ease-in-out active:scale-[1.2] overflow-hidden md:hover:scale-[1.1]"
               src={product.img}
@@ -110,7 +117,7 @@ const BuyNowPage = () => {
             </button>
             <button
               onClick={handleBuyNow}
-              className="text-[1.3rem] font-semibold text-white md:ml-[56px] border-solid border-[2px] border-[#fb4913] bg-[#fb4913] rounded-[6px] md:px-[60px] px-[80px] py-[8px] md:inline flex  md:mx-[0] mx-auto hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white z-10"
+              className="text-[1.3rem] font-semibold text-white md:ml-[56px] border-solid border-[2px] border-[#fb4913] bg-[#fb4913] rounded-[6px] md:px-[60px] px-[80px] py-[8px] md:inline flex md:mx-[0] mx-auto hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white z-10"
             >
               BUY NOW
             </button>

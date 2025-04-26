@@ -3,7 +3,7 @@ import { navHeading, bestDealsImage, bestSellersImage, electronicsImage, fashion
 import logo from "../images/nivzone_transparent.png";
 import { useState, useEffect } from "react";
 import NavBarMobile from "./NavBarMobile";
-import { useCart } from "./CartContext";
+import { useCart } from "./context/CartContext";
 
 const BookNowNavbar = ({ setBgImage }) => {
     const { cartSize } = useCart();

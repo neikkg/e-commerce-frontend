@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useCart } from "./CartContext";
-import { useOrder } from "./OrderContext";
+import { useCart } from "./context/CartContext";
+import { useOrder } from "./context/OrderContext";
 import { useNavigate } from "react-router-dom";
 import BookNowNavbar from "./BookNowNavBar";
 import Alert from "./Alert";
-import { initiatePayment } from "./services/razorpayIntegration";
+import { initiatePayment } from "../utils/razorpayIntegration";
 
 const Cart = () => {
-  const { cart, handleChange, removeFromCart, setCart } = useCart();
+  const { cart, handleChange, removeFromCart, fetchCart, clearCart } = useCart();
   const { addOrder } = useOrder();
   const [price, setPrice] = useState(0);
   const [alert, setAlert] = useState(null);
@@ -17,72 +17,44 @@ const Cart = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/Login", { state: { from: "/Cart" } });
+    } else {
+      fetchCart();
     }
-  }, [navigate]);
+  }, [navigate, fetchCart]);
 
   const handlePrice = () => {
     let total = 0;
     cart.forEach((item) => {
-      console.log("Processing cart item:", item);
-      const rawDiscountPrice = String(item.discountPrice || "").replace(/[^0-9.-]+/g, "");
-      const rawPrice = String(item.price || "").replace(/[^0-9.-]+/g, "");
-      const itemPrice = Number(rawDiscountPrice) || Number(rawPrice) || 0;
+      const itemPrice = Number(item.discountPrice || item.price || 0);
       const itemAmount = Number(item.amount) || 1;
-
-      if (isNaN(itemPrice)) {
-        console.warn("Invalid price detected for item:", item, "discountPrice:", item.discountPrice, "price:", item.price);
-      }
-      if (isNaN(itemAmount)) {
-        console.warn("Invalid amount detected for item:", item, "amount:", item.amount);
-      }
-
       if (!isNaN(itemPrice) && !isNaN(itemAmount)) {
         total += itemAmount * itemPrice;
-      } else {
-        total += 0;
       }
     });
     setPrice(total);
-    console.log("Calculated total price:", total);
   };
 
   const handleBuyNow = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setAlert({
-        message: "Please log in to proceed with payment.",
-        type: "error",
-      });
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      setAlert({ message: "Please log in to proceed with payment.", type: "error" });
+      setTimeout(() => navigate("/Login"), 2000);
       return;
     }
-
     try {
       const paymentResult = await initiatePayment(cart, price);
       if (paymentResult.success) {
-        console.log("Adding order from Cart:", cart, price);
-        addOrder(cart, price);
-        setCart([]);
-        localStorage.setItem("cart", JSON.stringify([]));
+        await addOrder(cart, price);
+        await clearCart();
         navigate("/", {
-          state: {
-            alert: {
-              message: "Payment successful!",
-              type: "success",
-            },
-          },
+          state: { alert: { message: "Payment successful!", type: "success" } }
         });
       } else {
         throw new Error("Payment not completed");
       }
     } catch (error) {
-      console.error("Payment error in Cart:", error);
-      setAlert({
-        message: "Payment failed or was canceled. Please try again.",
-        type: "error",
-      });
+      console.error("Payment error:", error);
+      setAlert({ message: "Payment failed or was canceled. Please try again.", type: "error" });
     }
   };
 
@@ -113,7 +85,7 @@ const Cart = () => {
         {cart.map((item) => (
           <div
             className="flex items-center justify-between border-b border-gray-200 py-4 mb-4 md:flex-row flex-col text-center"
-            key={item.id}
+            key={item.productId}
           >
             <div className="flex items-center gap-4 md:flex-row flex-col">
               <img
@@ -122,7 +94,7 @@ const Cart = () => {
                 className="w-24 h-24 object-contain"
               />
               <p className="text-lg font-medium">
-                {item.productName || item.title || "Unknown Product"}
+                {item.productName || "Unknown Product"}
               </p>
             </div>
             <div className="flex gap-2">
@@ -142,10 +114,10 @@ const Cart = () => {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-lg font-semibold">
-                ₹{((Number(String(item.discountPrice || "").replace(/[^0-9.-]+/g, "")) || Number(String(item.price || "").replace(/[^0-9.-]+/g, "")) || 0) * (Number(item.amount) || 1)).toLocaleString('en-IN')}
+                ₹{((item.discountPrice || item.price || 0) * (item.amount || 1)).toLocaleString('en-IN')}
               </span>
               <button
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart(item.productId)}
                 className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
               >
                 Remove

@@ -3,11 +3,11 @@ import { bestDealsImage, bestSellersImage, electronicsImage, fashionImage, homeI
 import logo from "../images/nivzone_transparent.png";
 import { useState, useEffect } from "react";
 import NavBarMobile from "./NavBarMobile";
-import { useCart } from "./CartContext";
+import { useCart } from "./context/CartContext";
 import Alert from "./Alert";
 
 const NavBar = ({ setBgImage }) => {
-  const { cartSize } = useCart();
+  const { cartSize, clearCart } = useCart();
   const [isMobileNavShow, setIsMobileNavBarShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -27,16 +27,12 @@ const NavBar = ({ setBgImage }) => {
     setIsAuthenticated(!!token);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await clearCart();
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/", {
-      state: {
-        alert: {
-          message: "Logged out successfully!",
-          type: "success"
-        }
-      }
+      state: { alert: { message: "Logged out successfully!", type: "success" } }
     });
   };
 
@@ -49,7 +45,6 @@ const NavBar = ({ setBgImage }) => {
   };
 
   const handleOrdersClick = () => {
-    console.log("NavBar: Orders clicked, isAuthenticated:", isAuthenticated);
     if (isAuthenticated) {
       navigate("/Orders");
     } else {
@@ -106,9 +101,7 @@ const NavBar = ({ setBgImage }) => {
               </i>
             </span>
           </div>
-          <ul
-            className="cursor-pointer lg:flex hidden items-center justify-between gap-[34px] text-[1.3rem]"
-          >
+          <ul className="cursor-pointer lg:flex hidden items-center justify-between gap-[34px] text-[1.3rem]">
             {navLinks.map((heading, index) => {
               const updateURL = heading.split(" ").join("");
               if (heading === "Orders") {
@@ -145,10 +138,7 @@ const NavBar = ({ setBgImage }) => {
                 </NavLink>
               );
             })}
-            <span
-              onClick={handleCartClick}
-              className="cursor-pointer"
-            >
+            <span onClick={handleCartClick} className="cursor-pointer">
               <i className="fa-solid fa-cart-shopping mr-[30px] font-semibold cursor-pointer text-[1.3rem]">
                 <span className="p-[1px] bg-red-600 rounded-full text-[0.9rem] text-white relative top-[-15px] border-[5px] border-red-600">
                   {cartSize}

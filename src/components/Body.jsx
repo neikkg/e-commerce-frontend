@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import NivzoneFooter from "./NivzoneFooter";
 import { useEffect, useState } from "react";
 import { homeImage } from "../utils/data";
-import { useCart } from "./CartContext";
+import { useCart } from "./context/CartContext";
 
 
 const Body = () => {
