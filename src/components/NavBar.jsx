@@ -28,11 +28,12 @@ const NavBar = ({ setBgImage }) => {
   }, []);
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setIsAuthenticated(false);
     navigate("/", {
       state: { alert: { message: "Logged out successfully!", type: "success" } }
     });
+    window.location.reload();
   };
 
   const handleCartClick = () => {
@@ -47,7 +48,7 @@ const NavBar = ({ setBgImage }) => {
     if (isAuthenticated) {
       navigate("/Orders");
     } else {
-      navigate("/Login", { replace: true, state: { from: "/Orders" } });
+      navigate("/Login", { state: { from: "/Orders" } });
     }
   };
 

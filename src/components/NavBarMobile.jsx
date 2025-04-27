@@ -23,7 +23,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     }, []);
 
     const handleLogout = async () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         setIsAuthenticated(false);
         setIsMobileNavBarShow(false);
         navigate("/", {
@@ -34,6 +34,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
                 }
             }
         });
+        window.location.reload();
     };
 
     const handleOrdersClick = () => {
@@ -41,7 +42,7 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
             navigate("/Orders");
             setIsMobileNavBarShow(false);
         } else {
-            navigate("/Login", { replace: true, state: { from: "/Orders" } });
+            navigate("/Login", { state: { from: "/Orders" } });
             setIsMobileNavBarShow(false);
         }
     };
