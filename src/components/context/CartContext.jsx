@@ -34,7 +34,7 @@ export const CartProvider = ({ children }) => {
       setIsFetching(true);
       try {
         console.log("Fetching cart with token:", token);
-        const response = await axios.get("https://e-commerce-api-i2ak.onrender.com/api/cart", {
+        const response = await axios.get("https://e-commerce-h39e.onrender.com/api/cart", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const cartData = Array.isArray(response.data) ? response.data : [];
@@ -101,7 +101,7 @@ export const CartProvider = ({ children }) => {
       };
       console.log("Adding to cart:", cartItem);
       const response = await axios.post(
-        "https://e-commerce-api-i2ak.onrender.com/api/cart",
+        "https://e-commerce-h39e.onrender.com/api/cart",
         cartItem,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -133,7 +133,7 @@ export const CartProvider = ({ children }) => {
       };
       console.log("Updating cart item:", cartItem);
       const response = await axios.post(
-        "https://e-commerce-api-i2ak.onrender.com/api/cart",
+        "https://e-commerce-h39e.onrender.com/api/cart",
         cartItem,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -156,7 +156,7 @@ export const CartProvider = ({ children }) => {
     try {
       console.log("Removing item from cart, productId:", productId);
       const response = await axios.post(
-        "https://e-commerce-api-i2ak.onrender.com/api/cart",
+        "https://e-commerce-h39e.onrender.com/api/cart",
         { productId, amount: 0 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -180,7 +180,7 @@ export const CartProvider = ({ children }) => {
     }
     try {
       console.warn("Explicitly clearing cart in database for user with token:", token);
-      await axios.delete("https://e-commerce-api-i2ak.onrender.com/api/cart", {
+      await axios.delete("https://e-commerce-h39e.onrender.com/api/cart", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCart([]);

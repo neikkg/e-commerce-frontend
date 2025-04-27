@@ -1,7 +1,7 @@
 export const initiatePayment = async (cartItems, totalAmount) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch('https://e-commerce-api-i2ak.onrender.com/api/payments/create-order', {
+        const response = await fetch('https://e-commerce-h39e.onrender.com/api/payments/create-order', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -15,7 +15,6 @@ export const initiatePayment = async (cartItems, totalAmount) => {
         }
   
         const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY;
-        console.log('Razorpay Key:', razorpayKey);
   
         const options = {
           key: razorpayKey,

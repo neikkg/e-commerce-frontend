@@ -23,7 +23,7 @@ const LoginPage = () => {
     try {
       if (isLogin) {
         await clearCart();
-        const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signin", {
+        const response = await axios.post("https://e-commerce-h39e.onrender.com/auth/signin", {
           email,
           password,
         });
@@ -36,7 +36,7 @@ const LoginPage = () => {
         setEmail("");
         setPassword("");
       } else {
-        const response = await axios.post("https://e-commerce-api-i2ak.onrender.com/auth/signup", {
+        const response = await axios.post("https://e-commerce-h39e.onrender.com/auth/signup", {
           fullName,
           email,
           password,

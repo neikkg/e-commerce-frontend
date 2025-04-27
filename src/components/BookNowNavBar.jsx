@@ -115,4 +115,4 @@ const BookNowNavbar = ({ setBgImage }) => {
     );
 };
 
-export default BookNowNavbar;
+export default BookNowNavbar; 

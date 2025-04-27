@@ -32,7 +32,7 @@ export const OrderProvider = ({ children }) => {
       setIsFetching(true);
       try {
         console.log("Fetching orders with token:", token);
-        const response = await axios.get("https://e-commerce-api-i2ak.onrender.com/api/orders", {
+        const response = await axios.get("https://e-commerce-h39e.onrender.com/api/orders", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOrders(response.data || []);
@@ -75,7 +75,7 @@ export const OrderProvider = ({ children }) => {
         throw new Error("Invalid total value");
       }
       const response = await axios.post(
-        "https://e-commerce-api-i2ak.onrender.com/api/orders",
+        "https://e-commerce-h39e.onrender.com/api/orders",
         { items: orderItems, total: numericTotal },
         { headers: { Authorization: `Bearer ${token}` } }
       );
