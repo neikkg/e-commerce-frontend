@@ -242,7 +242,7 @@ export const CartProvider = ({ children }) => {
       }
       const token = localStorage.getItem("token");
       if (!token || !token.includes('.')) {
-        console.log("Invalid or missing token, resetting cart");
+        console.log("No valid token, setting cart to empty for display");
         setCart([]);
         setCartSize(0);
         return;
@@ -264,10 +264,10 @@ export const CartProvider = ({ children }) => {
         setIsFetching(false);
       }
     }, 1000),
-    [] // Empty deps to ensure single instance
+    []
   );
 
-  // Initial fetch and token change detection
+  // Fetch cart on mount and token change
   useEffect(() => {
     console.log("CartContext useEffect triggered, fetchTrigger:", fetchTrigger);
     fetchCart();
@@ -275,8 +275,11 @@ export const CartProvider = ({ children }) => {
 
   // Monitor token changes to refetch cart
   useEffect(() => {
-    const handleStorageChange = () => {
-      triggerFetch();
+    const handleStorageChange = (e) => {
+      if (e.key === 'token') {
+        console.log("Token changed, triggering cart fetch");
+        triggerFetch();
+      }
     };
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
@@ -313,7 +316,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      triggerFetch(); // Ensure backend sync
+      triggerFetch();
     } catch (err) {
       console.error("Add to cart error:", err.response?.data || err.message);
     }
@@ -343,7 +346,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      triggerFetch(); // Ensure backend sync
+      triggerFetch();
     } catch (err) {
       console.error("Update cart error:", err.response?.data || err.message);
     }
@@ -364,7 +367,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      triggerFetch(); // Ensure backend sync
+      triggerFetch();
     } catch (err) {
       console.error("Remove from cart error:", err.response?.data || err.message);
     }
@@ -373,18 +376,19 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     const token = localStorage.getItem("token");
     if (!token || !token.includes('.')) {
-      console.log("Invalid or missing token, clearing cart locally");
+      console.log("Invalid or missing token, skipping clearCart");
       setCart([]);
       setCartSize(0);
       return;
     }
     try {
+      console.log("Clearing cart for user");
       await axios.delete("https://e-commerce-api-i2ak.onrender.com/api/cart", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCart([]);
       setCartSize(0);
-      triggerFetch(); // Ensure backend sync
+      triggerFetch();
     } catch (err) {
       console.error("Clear cart error:", err.response?.data || err.message);
     }
