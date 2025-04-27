@@ -5,7 +5,7 @@ import { useCart } from "./context/CartContext";
 
 const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const { cartSize, clearCart } = useCart();
+    const { cartSize } = useCart();
     const navigate = useNavigate();
 
     const navLinks = [
@@ -23,7 +23,6 @@ const NavBarMobile = ({ isMobileNavShow, setIsMobileNavBarShow, setBgImage }) =>
     }, []);
 
     const handleLogout = async () => {
-        await clearCart();
         localStorage.removeItem("token");
         setIsAuthenticated(false);
         setIsMobileNavBarShow(false);

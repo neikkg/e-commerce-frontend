@@ -242,7 +242,7 @@ export const CartProvider = ({ children }) => {
       }
       const token = localStorage.getItem("token");
       if (!token || !token.includes('.')) {
-        console.log("No valid token, setting cart to empty for display");
+        console.log("No valid token, setting cart to empty for display only");
         setCart([]);
         setCartSize(0);
         return;
@@ -256,6 +256,7 @@ export const CartProvider = ({ children }) => {
         const cartData = Array.isArray(response.data) ? response.data : [];
         setCart(cartData);
         setCartSize(cartData.reduce((total, item) => total + (item.amount || 1), 0));
+        console.log("Cart fetched successfully:", cartData);
       } catch (err) {
         console.error("Fetch cart error:", err.response?.data || err.message);
         setCart([]);
@@ -277,7 +278,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === 'token') {
-        console.log("Token changed, triggering cart fetch");
+        console.log("Token changed, triggering cart fetch. New token:", localStorage.getItem('token'));
         triggerFetch();
       }
     };
@@ -308,6 +309,7 @@ export const CartProvider = ({ children }) => {
         discountPrice: Number(String(item.discountPrice || "").replace(/[^0-9.-]+/g, "")) || undefined,
         amount
       };
+      console.log("Adding to cart:", cartItem);
       const response = await axios.post(
         "https://e-commerce-api-i2ak.onrender.com/api/cart",
         cartItem,
@@ -316,6 +318,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
+      console.log("Cart updated:", updatedCart);
       triggerFetch();
     } catch (err) {
       console.error("Add to cart error:", err.response?.data || err.message);
@@ -338,6 +341,7 @@ export const CartProvider = ({ children }) => {
         discountPrice: item.discountPrice,
         amount: newAmount
       };
+      console.log("Updating cart item:", cartItem);
       const response = await axios.post(
         "https://e-commerce-api-i2ak.onrender.com/api/cart",
         cartItem,
@@ -346,6 +350,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
+      console.log("Cart updated after change:", updatedCart);
       triggerFetch();
     } catch (err) {
       console.error("Update cart error:", err.response?.data || err.message);
@@ -359,6 +364,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     try {
+      console.log("Removing item from cart, productId:", productId);
       const response = await axios.post(
         "https://e-commerce-api-i2ak.onrender.com/api/cart",
         { productId, amount: 0 },
@@ -367,6 +373,7 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
+      console.log("Cart updated after removal:", updatedCart);
       triggerFetch();
     } catch (err) {
       console.error("Remove from cart error:", err.response?.data || err.message);
@@ -382,7 +389,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     try {
-      console.log("Clearing cart for user");
+      console.warn("Explicitly clearing cart for user with token:", token);
       await axios.delete("https://e-commerce-api-i2ak.onrender.com/api/cart", {
         headers: { Authorization: `Bearer ${token}` }
       });

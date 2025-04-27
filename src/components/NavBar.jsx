@@ -7,7 +7,7 @@ import { useCart } from "./context/CartContext";
 import Alert from "./Alert";
 
 const NavBar = ({ setBgImage }) => {
-  const { cartSize, clearCart } = useCart();
+  const { cartSize } = useCart();
   const [isMobileNavShow, setIsMobileNavBarShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -28,7 +28,6 @@ const NavBar = ({ setBgImage }) => {
   }, []);
 
   const handleLogout = async () => {
-    await clearCart();
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/", {
