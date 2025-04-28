@@ -21,28 +21,28 @@ export const CartProvider = ({ children }) => {
   const fetchCart = useCallback(
     debounce(async () => {
       if (isFetching) {
-        console.log("Fetch cart skipped: already fetching");
+        // console.log("Fetch cart skipped: already fetching");
         return;
       }
       const token = localStorage.getItem("token");
       if (!token || !token.includes('.')) {
-        console.log("No valid token, setting local cart to empty without affecting database");
+        // console.log("No valid token, setting local cart to empty without affecting database");
         setCart([]);
         setCartSize(0);
         return;
       }
       setIsFetching(true);
       try {
-        console.log("Fetching cart with token:", token);
+        // console.log("Fetching cart with token:", token);
         const response = await axios.get("https://e-commerce-h39e.onrender.com/api/cart", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const cartData = Array.isArray(response.data) ? response.data : [];
         setCart(cartData);
         setCartSize(cartData.reduce((total, item) => total + (item.amount || 1), 0));
-        console.log("Cart fetched from database:", cartData);
+        // console.log("Cart fetched from database:", cartData);
       } catch (err) {
-        console.error("Fetch cart error:", err.response?.data || err.message);
+        // console.error("Fetch cart error:", err.response?.data || err.message);
         setCart([]);
         setCartSize(0);
       } finally {
@@ -54,7 +54,7 @@ export const CartProvider = ({ children }) => {
 
   // Fetch cart on mount and token change
   useEffect(() => {
-    console.log("CartContext useEffect triggered, fetchTrigger:", fetchTrigger);
+    // console.log("CartContext useEffect triggered, fetchTrigger:", fetchTrigger);
     fetchCart();
   }, [fetchTrigger, fetchCart]);
 
@@ -62,9 +62,9 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === 'token') {
-        console.log("Token changed, triggering cart fetch. New token:", localStorage.getItem('token'));
+        // console.log("Token changed, triggering cart fetch. New token:", localStorage.getItem('token'));
         if (!localStorage.getItem('token') || !localStorage.getItem('token').includes('.')) {
-          console.log("Token removed or invalid, setting local cart to empty without database change");
+          // console.log("Token removed or invalid, setting local cart to empty without database change");
           setCart([]);
           setCartSize(0);
         } else {
@@ -99,7 +99,7 @@ export const CartProvider = ({ children }) => {
         discountPrice: Number(String(item.discountPrice || "").replace(/[^0-9.-]+/g, "")) || undefined,
         amount
       };
-      console.log("Adding to cart:", cartItem);
+      // console.log("Adding to cart:", cartItem);
       const response = await axios.post(
         "https://e-commerce-h39e.onrender.com/api/cart",
         cartItem,
@@ -108,17 +108,17 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      console.log("Cart updated in database:", updatedCart);
+      // console.log("Cart updated in database:", updatedCart);
       triggerFetch();
     } catch (err) {
-      console.error("Add to cart error:", err.response?.data || err.message);
+      // console.error("Add to cart error:", err.response?.data || err.message);
     }
   };
 
   const handleChange = async (item, delta) => {
     const token = localStorage.getItem("token");
     if (!token || !token.includes('.')) {
-      console.log("Invalid or missing token, skipping handleChange");
+      // console.log("Invalid or missing token, skipping handleChange");
       return;
     }
     try {
@@ -131,7 +131,7 @@ export const CartProvider = ({ children }) => {
         discountPrice: item.discountPrice,
         amount: newAmount
       };
-      console.log("Updating cart item:", cartItem);
+      // console.log("Updating cart item:", cartItem);
       const response = await axios.post(
         "https://e-commerce-h39e.onrender.com/api/cart",
         cartItem,
@@ -140,21 +140,21 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      console.log("Cart updated after change:", updatedCart);
+      // console.log("Cart updated after change:", updatedCart);
       triggerFetch();
     } catch (err) {
-      console.error("Update cart error:", err.response?.data || err.message);
+      // console.error("Update cart error:", err.response?.data || err.message);
     }
   };
 
   const removeFromCart = async (productId) => {
     const token = localStorage.getItem("token");
     if (!token || !token.includes('.')) {
-      console.log("Invalid or missing token, skipping removeFromCart");
+      // console.log("Invalid or missing token, skipping removeFromCart");
       return;
     }
     try {
-      console.log("Removing item from cart, productId:", productId);
+      // console.log("Removing item from cart, productId:", productId);
       const response = await axios.post(
         "https://e-commerce-h39e.onrender.com/api/cart",
         { productId, amount: 0 },
@@ -163,23 +163,23 @@ export const CartProvider = ({ children }) => {
       const updatedCart = Array.isArray(response.data) ? response.data : [];
       setCart(updatedCart);
       setCartSize(updatedCart.reduce((total, item) => total + (item.amount || 1), 0));
-      console.log("Cart updated after removal:", updatedCart);
+      // console.log("Cart updated after removal:", updatedCart);
       triggerFetch();
     } catch (err) {
-      console.error("Remove from cart error:", err.response?.data || err.message);
+      // console.error("Remove from cart error:", err.response?.data || err.message);
     }
   };
 
   const clearCart = async () => {
     const token = localStorage.getItem("token");
     if (!token || !token.includes('.')) {
-      console.log("Invalid or missing token, setting local cart to empty without database change");
+      // console.log("Invalid or missing token, setting local cart to empty without database change");
       setCart([]);
       setCartSize(0);
       return;
     }
     try {
-      console.warn("Explicitly clearing cart in database for user with token:", token);
+      // console.warn("Explicitly clearing cart in database for user with token:", token);
       await axios.delete("https://e-commerce-h39e.onrender.com/api/cart", {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -187,7 +187,7 @@ export const CartProvider = ({ children }) => {
       setCartSize(0);
       triggerFetch();
     } catch (err) {
-      console.error("Clear cart error:", err.response?.data || err.message);
+      // console.error("Clear cart error:", err.response?.data || err.message);
     }
   };
 

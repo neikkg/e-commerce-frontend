@@ -28,7 +28,7 @@ const BookNowNavbar = ({ setBgImage }) => {
 
   // Debug setBgImage prop
   useEffect(() => {
-    console.log("BookNowNavbar: setBgImage type:", typeof setBgImage, "value:", setBgImage);
+    // console.log("BookNowNavbar: setBgImage type:", typeof setBgImage, "value:", setBgImage);
   }, [setBgImage]);
 
   useEffect(() => {
@@ -53,9 +53,9 @@ const BookNowNavbar = ({ setBgImage }) => {
   };
 
   const changeImg = (url) => {
-    console.log("changeImg called with:", url); // Debug
+    // console.log("changeImg called with:", url); // Debug
     if (typeof setBgImage === "function") {
-      console.log("Setting bgImage for:", url); // Debug
+      // console.log("Setting bgImage for:", url); // Debug
       switch (url) {
         case "Home":
           setBgImage(homeImage);
@@ -76,7 +76,7 @@ const BookNowNavbar = ({ setBgImage }) => {
           setBgImage(homeImage);
       }
     } else {
-      console.warn("setBgImage is not a function in BookNowNavbar, skipping banner update.");
+      // console.warn("setBgImage is not a function in BookNowNavbar, skipping banner update.");
     }
   };
 
@@ -98,7 +98,7 @@ const BookNowNavbar = ({ setBgImage }) => {
             />
             <span
               onClick={handleCartClick}
-              className="md:hidden mr-[20px] ml-auto cursor-pointer"
+              className="md:hidden mr-[auto] ml-auto cursor-pointer"
             >
               <i className="fa-solid fa-cart-shopping mr-[30px] font-semibold cursor-pointer mt-[34px] text-[1.3rem]">
               <span className="p-[1px] bg-red-600 rounded-full text-[0.9rem] text-white relative top-[-15px] border-[5px] border-red-600">

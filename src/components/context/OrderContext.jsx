@@ -20,24 +20,24 @@ export const OrderProvider = ({ children }) => {
   const fetchOrders = useCallback(
     debounce(async () => {
       if (isFetching) {
-        console.log("Fetch orders skipped: already fetching");
+        // console.log("Fetch orders skipped: already fetching");
         return;
       }
       const token = localStorage.getItem("token");
       if (!token || !token.includes('.')) {
-        console.log("Invalid or missing token, skipping fetchOrders");
+        // console.log("Invalid or missing token, skipping fetchOrders");
         setOrders([]);
         return;
       }
       setIsFetching(true);
       try {
-        console.log("Fetching orders with token:", token);
+        // console.log("Fetching orders with token:", token);
         const response = await axios.get("https://e-commerce-h39e.onrender.com/api/orders", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOrders(response.data || []);
       } catch (err) {
-        console.error("Fetch orders error:", err.response?.data || err.message);
+        // console.error("Fetch orders error:", err.response?.data || err.message);
         setOrders([]);
       } finally {
         setIsFetching(false);
@@ -47,7 +47,7 @@ export const OrderProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    console.log("OrderContext useEffect triggered, fetchTrigger:", fetchTrigger);
+    // console.log("OrderContext useEffect triggered, fetchTrigger:", fetchTrigger);
     fetchOrders();
   }, [fetchTrigger, fetchOrders]);
 
@@ -58,7 +58,7 @@ export const OrderProvider = ({ children }) => {
   const addOrder = async (items, total) => {
     const token = localStorage.getItem("token");
     if (!token || !token.includes('.')) {
-      console.log("Invalid or missing token, skipping addOrder");
+      // console.log("Invalid or missing token, skipping addOrder");
       return;
     }
     try {
@@ -82,7 +82,7 @@ export const OrderProvider = ({ children }) => {
       setOrders(prev => [...prev, response.data]);
       triggerFetch(); // Refresh orders after adding
     } catch (err) {
-      console.error("Add order error:", err.response?.data || err.message);
+      // console.error("Add order error:", err.response?.data || err.message);
       throw err;
     }
   };

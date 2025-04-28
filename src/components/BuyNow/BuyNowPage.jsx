@@ -54,7 +54,7 @@ const BuyNowPage = () => {
       return;
     }
     try {
-      console.log("Initiating payment for product:", product);
+      // console.log("Initiating payment for product:", product);
       const paymentResult = await initiatePayment([product], product.discountPrice);
       if (paymentResult.success) {
         const orderItem = {
@@ -65,7 +65,7 @@ const BuyNowPage = () => {
           discountPrice: Number(product.discountPrice) || undefined,
           amount: 1
         };
-        console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice);
+        // console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice);
         await addOrder([orderItem], product.discountPrice); // Pass numeric total
         navigate("/", {
           state: {
@@ -79,7 +79,7 @@ const BuyNowPage = () => {
         throw new Error("Payment not completed");
       }
     } catch (error) {
-      console.error("Payment error in BuyNowPage:", error);
+      // console.error("Payment error in BuyNowPage:", error);
       setAlert({
         message: "Payment failed or was canceled. Please try again.",
         type: "error",
