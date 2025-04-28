@@ -1,5 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { bestDealsImage, bestSellersImage, electronicsImage, fashionImage, homeImage } from "../utils/data";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  bestDealsImage,
+  bestSellersImage,
+  electronicsImage,
+  fashionImage,
+  homeImage,
+} from "../utils/data";
 import logo from "../images/nivzone_transparent.png";
 import { useState, useEffect } from "react";
 import NavBarMobile from "./NavBarMobile";
@@ -12,6 +18,7 @@ const NavBar = ({ setBgImage }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = [
     "Home",
@@ -22,6 +29,39 @@ const NavBar = ({ setBgImage }) => {
     "Orders",
   ];
 
+  // Update bgImage based on current route
+  useEffect(() => {
+    const path = location.pathname;
+    let newImage;
+
+    switch (path) {
+      case "/":
+        newImage = homeImage;
+        break;
+      case "/Electronics":
+        newImage = electronicsImage;
+        break;
+      case "/Fashion":
+        newImage = fashionImage;
+        break;
+      case "/BestDeals":
+        newImage = bestDealsImage;
+        break;
+      case "/BestSellers":
+        newImage = bestSellersImage;
+        break;
+      case "/Orders":
+      case "/Cart":
+      case "/Login":
+      default:
+        newImage = homeImage; // Fallback for non-banner pages
+    }
+
+    if (typeof setBgImage === "function" && newImage) {
+      setBgImage(newImage);
+    }
+  }, [location.pathname, setBgImage]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
@@ -31,7 +71,9 @@ const NavBar = ({ setBgImage }) => {
     localStorage.clear();
     setIsAuthenticated(false);
     navigate("/", {
-      state: { alert: { message: "Logged out successfully!", type: "success" } }
+      state: {
+        alert: { message: "Logged out successfully!", type: "success" },
+      },
     });
     window.location.reload();
   };
@@ -53,24 +95,26 @@ const NavBar = ({ setBgImage }) => {
   };
 
   const changeImg = (url) => {
-    switch (url) {
-      case "Home":
-        setBgImage(homeImage);
-        break;
-      case "Electronics":
-        setBgImage(electronicsImage);
-        break;
-      case "Fashion":
-        setBgImage(fashionImage);
-        break;
-      case "Best Deals":
-        setBgImage(bestDealsImage);
-        break;
-      case "Best Sellers":
-        setBgImage(bestSellersImage);
-        break;
-      default:
-        setBgImage(homeImage);
+    if (typeof setBgImage === "function") {
+      switch (url) {
+        case "Home":
+          setBgImage(homeImage);
+          break;
+        case "Electronics":
+          setBgImage(electronicsImage);
+          break;
+        case "Fashion":
+          setBgImage(fashionImage);
+          break;
+        case "Best Deals":
+          setBgImage(bestDealsImage);
+          break;
+        case "Best Sellers":
+          setBgImage(bestSellersImage);
+          break;
+        default:
+          setBgImage(homeImage);
+      }
     }
   };
 
@@ -86,10 +130,17 @@ const NavBar = ({ setBgImage }) => {
       <div className="py-[20px] bg-slate-300/60 text-blue-600">
         <div className="flex items-center justify-between md:h-[90px] h-[60px] w-full">
           <div className="flex items-center justify-center gap-[50px] mb-[40px] w-[180px] mx-auto lg:ml-[90px]">
-            <span className="md:hidden text-[1.6rem]" onClick={() => setIsMobileNavBarShow(true)}>
+            <span
+              className="md:hidden text-[1.6rem]"
+              onClick={() => setIsMobileNavBarShow(true)}
+            >
               <i className="fa-solid fa-bars text-slate-800 mt-[34px]"></i>
             </span>
-            <img className="h-[70px] md:mt-[30px] mt-[40px] items-center md:ml-[0px]" src={logo} alt="Nivzone logo" />
+            <img
+              className="h-[70px] md:mt-[30px] mt-[40px] items-center md:ml-[0px]"
+              src={logo}
+              alt="Nivzone logo"
+            />
             <span
               onClick={handleCartClick}
               className="md:hidden mr-[20px] ml-auto cursor-pointer"
