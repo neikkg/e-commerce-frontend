@@ -2,6 +2,10 @@ import { Link} from "react-router-dom";
 import { navHeading } from "../utils/data";
 import { usefulLinks } from "../utils/data";
 import logo from "../images/nivzone_transparent.png";
+import { FaLinkedin } from "react-icons/fa";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const NivzoneFooter = () => {
    return <section className="max-w-[1450px] mx-auto mt-[40px]">
@@ -56,13 +60,17 @@ const NivzoneFooter = () => {
                     </div>
                     </div>
                     <div className="text-white bg-black md:h-[50px] h-[100px] flex md:flex-row flex-col items-center justify-between">
-                        <p className="text-[0.9rem] md:ml-[120px] text-center py-[10px]">Copyright© 2025. Nivzone All Rights Reserved. Made with love&#x2764;&#xfe0f; India.</p>
+                        <p className="text-[0.9rem] md:ml-[120px] text-center py-[10px]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright© 2025. Nivzone All Rights Reserved. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Made with love&#x2764;&#xfe0f; India.</p>
                         <div className="md:mr-[140px] flex  items-center pb-[10px]">
                             <span className="text-white text-[0.9rem] font-semibold mr-[14px]">Follow Us:</span>
-                            <span><i className="fa-brands fa-square-facebook text-blue-500 border-[1px] rounded-[6px] border-blue-4Name00 text-[2rem] bg-white hover:text-white hover:bg-blue-400 cursor-pointer  ml-[4px]"></i></span>
-                            <span><i className="fa-brands fa-square-x-twitter text-blue-500 border-[1px] rounded-[6px] border-blue-400 text-[2rem] bg-white hover:text-white hover:bg-blue-400 cursor-pointer ml-[4px]"></i></span>
-                            <span><i className="fa-brands fa-square-instagram text-blue-500 border-[1px] rounded-[6px] border-blue-400 text-[2rem] bg-white hover:text-white hover:bg-blue-400 cursor-pointer ml-[4px]"></i></span>
-                            <span><i className="fa-brands fa-youtube text-blue-500 border-[1px] rounded-[6px] border-blue-400 text-[2rem] bg-white hover:text-white hover:bg-blue-400 cursor-pointer ml-[4px]"></i></span>
+                            <span><a href="https://www.facebook.com">
+                            <FaFacebook className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <span><a href="https://www.linkdin.com">
+                            <FaLinkedin className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <span><a href="https://x.com">
+                            <FaSquareXTwitter className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <span><a href="https://www.instagram.com">
+                            <FaInstagramSquare className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
                         </div>
             </div>
         </section> 
