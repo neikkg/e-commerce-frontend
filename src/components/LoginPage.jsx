@@ -48,7 +48,6 @@ const LoginPage = () => {
         setPassword("");
       }
     } catch (err) {
-      // console.error("Login/Signup error:", err.response?.data || err.message);
       setMessage(err.response?.data?.message || "An error occurred. Please try again.");
     } finally {
       setLoading(false);

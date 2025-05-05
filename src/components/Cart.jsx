@@ -53,7 +53,7 @@ const Cart = () => {
         throw new Error("Payment not completed");
       }
     } catch (error) {
-      // console.error("Payment error:", error);
+      
       setAlert({ message: "Payment failed or was canceled. Please try again.", type: "error" });
     }
   };

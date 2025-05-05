@@ -28,7 +28,6 @@ const BookNowNavbar = ({ setBgImage }) => {
 
   // Debug setBgImage prop
   useEffect(() => {
-    // console.log("BookNowNavbar: setBgImage type:", typeof setBgImage, "value:", setBgImage);
   }, [setBgImage]);
 
   useEffect(() => {
@@ -53,9 +52,7 @@ const BookNowNavbar = ({ setBgImage }) => {
   };
 
   const changeImg = (url) => {
-    // console.log("changeImg called with:", url); // Debug
     if (typeof setBgImage === "function") {
-      // console.log("Setting bgImage for:", url); // Debug
       switch (url) {
         case "Home":
           setBgImage(homeImage);
@@ -76,7 +73,6 @@ const BookNowNavbar = ({ setBgImage }) => {
           setBgImage(homeImage);
       }
     } else {
-      // console.warn("setBgImage is not a function in BookNowNavbar, skipping banner update.");
     }
   };
 

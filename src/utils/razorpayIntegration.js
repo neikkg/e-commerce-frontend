@@ -24,12 +24,10 @@ export const initiatePayment = async (cartItems, totalAmount) => {
           description: `Payment for ${cartItems.length} item(s)`,
           order_id: order.id,
           handler: function (response) {
-            // console.log('Payment successful:', response);
             resolve({ success: true, data: response });
           },
           modal: {
             ondismiss: function () {
-              // console.log('Payment canceled');
               reject(new Error('Payment canceled by user'));
             },
           },
@@ -52,12 +50,10 @@ export const initiatePayment = async (cartItems, totalAmount) => {
   
         const razorpay = new window.Razorpay(options);
         razorpay.on('payment.failed', function (response) {
-          // console.error('Payment failed:', response.error);
           reject(new Error('Payment failed: ' + response.error.description));
         });
         razorpay.open();
       } catch (error) {
-        // console.error('Error during payment initiation:', error);
         reject(error);
       }
     });

@@ -64,11 +64,11 @@ const NivzoneFooter = () => {
                         <div className="md:mr-[140px] flex  items-center pb-[10px]">
                             <span className="text-white text-[0.9rem] font-semibold mr-[14px]">Follow Us:</span>
                             <span><a href="https://www.facebook.com">
-                            <FaFacebook className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <FaFacebook className="text-2xl hover:text-gray-500 duration-300 mr-[1rem]"/> </a> </span>
                             <span><a href="https://www.linkdin.com">
-                            <FaLinkedin className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <FaLinkedin className="text-2xl hover:text-gray-500 duration-300 mr-[1rem]"/> </a> </span>
                             <span><a href="https://x.com">
-                            <FaSquareXTwitter className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
+                            <FaSquareXTwitter className="text-2xl hover:text-gray-500 duration-300 mr-[1rem]"/> </a> </span>
                             <span><a href="https://www.instagram.com">
                             <FaInstagramSquare className="text-2xl hover:text-gray-500 duration-300"/> </a> </span>
                         </div>

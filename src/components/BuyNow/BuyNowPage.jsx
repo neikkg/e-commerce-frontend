@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import BookNowNavbar from "../BookNowNavBar.jsx";
 import NivzoneFooter from "../NivzoneFooter.jsx";
@@ -22,7 +22,7 @@ const BuyNowPage = () => {
   const [product, setProduct] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [alert, setAlert] = useState(null);
-  const { addToCart } = useCart();
+  const { addToCart, clearCart } = useCart();
   const { addOrder } = useOrder();
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,7 +54,6 @@ const BuyNowPage = () => {
       return;
     }
     try {
-      // console.log("Initiating payment for product:", product);
       const paymentResult = await initiatePayment([product], product.discountPrice);
       if (paymentResult.success) {
         const orderItem = {
@@ -65,8 +64,8 @@ const BuyNowPage = () => {
           discountPrice: Number(product.discountPrice) || undefined,
           amount: 1
         };
-        // console.log("Adding order from BuyNowPage:", [orderItem], product.discountPrice);
         await addOrder([orderItem], product.discountPrice); // Pass numeric total
+        await clearCart(); // Clear the cart after successful payment and order
         navigate("/", {
           state: {
             alert: {
@@ -79,7 +78,6 @@ const BuyNowPage = () => {
         throw new Error("Payment not completed");
       }
     } catch (error) {
-      // console.error("Payment error in BuyNowPage:", error);
       setAlert({
         message: "Payment failed or was canceled. Please try again.",
         type: "error",
